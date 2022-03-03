@@ -1,25 +1,36 @@
 import json
-f = open("json.json", "r")
-c = f.read()
+import funciones
 
 golesMetaPorNivel = {'A':5,'B':10,'C':15,'Cuauh':20}
 
-f.close()
+jsonDeJugadores = open("jsonEntrada.json", "r")
+informacionDelJsonDeJugadores = jsonDeJugadores.read()
+
+listaDeJugadores = json.loads(informacionDelJsonDeJugadores)
 
 
-listaDeJugadores = json.loads(c)
+cantidadDeGolesMetaPorEquipo= funciones.obtenerMetaGolesPorEquipo(listaDeJugadores)
+cantidadDeGolesPorEquipo= funciones.obtenerGolesPorEquipo(listaDeJugadores)
+listadeJugadores= funciones.asignarSueldoAJugadores(listaDeJugadores,cantidadDeGolesPorEquipo,cantidadDeGolesMetaPorEquipo)
+jsonDeJugadores.close()
 
-cantidadDeGolesMetaPorEquipo='0'
-cantidadDeGolesPorEquipo='0'
-for jugador in listaDeJugadores["jugadores"]:
+jsonFinal = open("jsonSalida.json", "r+")
+json.dump(listaDeJugadores, jsonFinal, indent=4)
+print (listaDeJugadores)
+jsonFinal.close()
+
+
+
+
+
+"""for jugador in listaDeJugadores["jugadores"]:
     nivel = jugador["nivel"]
     cantidadDeGolesMetaPorEquipo = int(cantidadDeGolesMetaPorEquipo) + int(golesMetaPorNivel.get(nivel))
     cantidadDeGolesPorEquipo=int(cantidadDeGolesPorEquipo) + int(jugador["goles"])
 print (cantidadDeGolesMetaPorEquipo)
 print (cantidadDeGolesPorEquipo) 
 
-a_file = open("json.json", "r+")
-listaDeJugadores = json.load(a_file)
+
 
 for jugador in listaDeJugadores["jugadores"]:
     sueldoFinal=0
@@ -36,12 +47,7 @@ for jugador in listaDeJugadores["jugadores"]:
     print (cantidadDeBonoPorEquipo)
     bonoTotal = (cantidadDeBonoPorEquipo + cantidadDeBonoIndividual)/2
     print (bonoTotal)
-    jugador["sueldo_completo"] = int(jugador["sueldo"]) + bonoTotal
-    
-a_file.close()
+    jugador["sueldo_completo"] = int(jugador["sueldo"]) + bonoTotal"""
 
-b_file = open("Json entrada.json", "r+")
-json.dump(listaDeJugadores, b_file, indent=4)
-print (listaDeJugadores)
-b_file.close()
+
 
